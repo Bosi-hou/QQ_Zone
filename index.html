@@ -1,24 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>QQ 空间样式</title>
     <meta charset="UTF-8">
-    <title></title>
-
     <style>
-    body {
-      text-align: center;
-    }
+        /* CSS 样式 */
+        body {
+            background-color: #f1f1f1;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-    h1, h2 {
-      text-align: center;
-    }
+        #header {
+            background-color: #337ab7;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
 
-    #lyrics {
-      text-align: center;
-      font-size: 1.5em; /* 调整字体大小 */
-    }
+        #content {
+            background-color: #fff;
+            margin: 20px;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        #footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        #lyrics {
+            text-align: center;
+            color: #337ab7;
+            font-size: 2.25em; /* 调整字体大小 */
+        }
+
     </style>
-
 
     <script>
         // 播放音乐函数
@@ -27,22 +55,22 @@
             audio.play();
         }
 
-        // 监听文件上传
-        function handleFileUpload() {
-            var fileInput = document.getElementById('');
-            var file = fileInput.files[0];
-
-            // 检查是否选择了文件
-            if (file) {
-                var audio = document.getElementById('audio');
-
-                // 更新音乐源
-                audio.src = URL.createObjectURL(file);
-
-                // 自动播放
-                audio.play();
-            }
-        }
+        // // 监听文件上传
+        // function handleFileUpload() {
+        //     var fileInput = document.getElementById('');
+        //     var file = fileInput.files[0];
+        //
+        //     // 检查是否选择了文件
+        //     if (file) {
+        //         var audio = document.getElementById('audio');
+        //
+        //         // 更新音乐源
+        //         audio.src = URL.createObjectURL(file);
+        //
+        //         // 自动播放
+        //         audio.play();
+        //     }
+        // }
 
 
         function loadLyrics() {
@@ -90,29 +118,43 @@
 
 
     </script>
+
 </head>
+
+
 <body onload="playMusic(); loadLyrics()">
-<h1>涙傷傢鏃のＱＱ悾間</h1>
+<div id="header">
+    <h1>QQ 空间</h1>
+</div>
+
+<div id="content">
+    <h2>欢迎来到：涙傷傢鏃のＱＱ悾間</h2>
+    <p>这里是我的个人空间，欢迎访问！</p>
+</div>
+
 
 <audio id="audio" controls autoplay>
     <source src="Music_folder/XuLiang_Hongzhuang.mp3" type="audio/mpeg">
     您的浏览器不支持HTML5音频标签。
 </audio>
-    
-<iframe src="Music_folder/XuLiang_Hongzhuang.mp3" allow="autoplay" id="audio" style="display: none;"></iframe>
+
+<!--   <div>-->
+<!--    <embed src="Music_folder/XuLiang_Hongzhuang.mp3" autostart="true" loop="false" width="1px" height="1px">-->
+<!--  </div>-->
 
 
-<!--   <div>
-   <embed src="Music_folder/XuLiang_Hongzhuang.mp3" autostart="true" loop="false" width="1px" height="1px">
- </div> -->
-
-
-<h2>上传新音乐</h2>
-<input type="file" id="fileInput" onchange="handleFileUpload()">
+<!--<h2>上传新音乐</h2>-->
+<!--<input type="file" id="fileInput" onchange="handleFileUpload()">-->
 
 <h2>歌词</h2>
 <div id="lyrics"></div>
 
 
+
+
+
+<div id="footer">
+    &copy; 2023 My QQ Zone. All rights reserved.
+</div>
 </body>
 </html>
