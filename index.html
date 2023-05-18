@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+    body {
+      text-align: center;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    #lyrics {
+      text-align: center;
+      font-size: 1.5em; /* 调整字体大小 */
+    }
+    </style>
+
+
+    <script>
+        // 播放音乐函数
+        function playMusic() {
+            var audio = document.getElementById('audio');
+            audio.play();
+        }
+
+        // 监听文件上传
+        function handleFileUpload() {
+            var fileInput = document.getElementById('');
+            var file = fileInput.files[0];
+
+            // 检查是否选择了文件
+            if (file) {
+                var audio = document.getElementById('audio');
+
+                // 更新音乐源
+                audio.src = URL.createObjectURL(file);
+
+                // 自动播放
+                audio.play();
+            }
+        }
+
+
+        function loadLyrics() {
+            var lyricsRequest = new XMLHttpRequest();
+            lyricsRequest.open('GET', 'Music_folder/Hongzhuang_lyrics.txt', true); // LRC 歌词文件的路径和名称
+            lyricsRequest.onreadystatechange = function () {
+                if (lyricsRequest.readyState === 4 && lyricsRequest.status === 200) {
+                    var lyricsText = lyricsRequest.responseText;
+                    var lyricsLines = lyricsText.split('\n');
+                    var lyricsData = [];
+
+                    // 解析每一行歌词
+                    for (var i = 0; i < lyricsLines.length; i++) {
+                        var line = lyricsLines[i];
+                        var timeRegex = /\[(\d{2}):(\d{2})\.(\d{2})\]/;
+                        var timeMatches = line.match(timeRegex);
+
+                        if (timeMatches) {
+                            var minutes = parseInt(timeMatches[1]);
+                            var seconds = parseInt(timeMatches[2]);
+                            var milliseconds = parseInt(timeMatches[3]);
+                            var timestamp = minutes * 60 + seconds + milliseconds / 100;
+
+                            var lyrics = line.replace(timeRegex, '');
+                            lyricsData.push({timestamp: timestamp, lyrics: lyrics});
+                        }
+                    }
+
+                    // 监听音乐播放进度，显示匹配的歌词
+                    var audio = document.getElementById('audio');
+                    audio.ontimeupdate = function () {
+                        var currentTime = audio.currentTime;
+                        for (var j = 0; j < lyricsData.length; j++) {
+                            if (currentTime >= lyricsData[j].timestamp && (!lyricsData[j + 1] || currentTime < lyricsData[j + 1].timestamp)) {
+                                var lyricsContainer = document.getElementById('lyrics');
+                                lyricsContainer.innerHTML = lyricsData[j].lyrics;
+                                break;
+                            }
+                        }
+                    };
+                }
+            };
+            lyricsRequest.send();
+        }
+
+
+    </script>
+</head>
+<body onload="playMusic(); loadLyrics()">
+<h1>涙傷傢鏃のＱＱ悾間</h1>
+
+<audio id="audio" controls autoplay>
+    <source src="Music_folder/XuLiang_Hongzhuang.mp3" type="audio/mpeg">
+    您的浏览器不支持HTML5音频标签。
+</audio>
+
+<!--   <div>-->
+<!--    <embed src="Music_folder/XuLiang_Hongzhuang.mp3" autostart="true" loop="false" width="1px" height="1px">-->
+<!--  </div>-->
+
+
+<h2>上传新音乐</h2>
+<input type="file" id="fileInput" onchange="handleFileUpload()">
+
+<h2>歌词</h2>
+<div id="lyrics"></div>
+
+
+</body>
+</html>
